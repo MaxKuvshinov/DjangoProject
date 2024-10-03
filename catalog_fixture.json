@@ -1,0 +1,65 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+        "name": "Автомобили",
+        "description": "Все марки и модели автомобилей"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "name": "Мотоциклы",
+        "description": "Все марки и модели мотоциклов"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+        "name": "Самокаты",
+        "description": "Все марки и модели самокатов"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "name": "BMW X-5",
+        "description": "Cреднеразмерный кроссовер от немецкого автопроизводителя BMW",
+        "image": "",
+        "category": 1,
+        "price": 15000.0,
+        "created_at": "2024-10-03",
+        "updated_at": "2024-10-03"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Yamaha YZF-R1",
+        "description": "R1 — самый целенаправленный и высокотехнологичный спортивный мотоцикл, когда-либо созданный Yamaha",
+        "image": "",
+        "category": 2,
+        "price": 5000.0,
+        "created_at": "2024-10-03",
+        "updated_at": "2024-10-03"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "name": "Kugoo Kirin LX 10 Plus",
+        "description": "Это новое слово в мире мобильности. Сочетая в себе мощность, надежность и стильный дизайн, этот самокат станет незаменимым спутником в городской суете.",
+        "image": "",
+        "category": 3,
+        "price": 1000.0,
+        "created_at": "2024-10-03",
+        "updated_at": "2024-10-03"
+    }
+}
+]
