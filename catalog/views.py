@@ -1,6 +1,6 @@
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
 from catalog.models import Product
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
 
 
 def home(request):
