@@ -1,10 +1,10 @@
+from catalog.forms import ProductForm
 from catalog.models import Product
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views import View
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from catalog.forms import ProductForm
+from django.views import View
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 
 class CatalogHomeView(ListView):
