@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import CustomUser
 
 
 class Category(models.Model):
@@ -29,6 +30,7 @@ class Product(models.Model):
         ('publication', 'Опубликовано')
     ]
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='awaiting_publication', verbose_name='Статус публикации')
+    owner = models.ForeignKey(CustomUser, blank=True, null=True, on_delete=models.SET_NULL, verbose_name='Владелец')
 
     def __str__(self):
         return self.name
