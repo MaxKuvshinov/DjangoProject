@@ -23,7 +23,7 @@ class Command(BaseCommand):
                 }
             )
 
-        with open("group_fixture.json", "w", encoding="utf-9") as f:
+        with open("group_fixture.json", "w", encoding="utf-8") as f:
             json.dump(group_data, f, indent=4, ensure_ascii=False)
 
         self.stdout.write(self.style.SUCCESS("Файл group_fixture.json успешно создан"))
