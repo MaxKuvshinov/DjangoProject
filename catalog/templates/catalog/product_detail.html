@@ -8,9 +8,10 @@
                 <h5 class="card-title">{{ product.name }} {{ product.price }}</h5>
                 <img src="{{ product.image|media_filter }}" class="card-img-top" alt="{{ product.name }}">
                 <p class="card-text">{{ product.description }}</p>
-                {% if perms.catalog.can_unpublish_product or product.owner == user %}
-                <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-primary">Редактировать</a>
-                <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-danger">Удалить</a>
+
+                {% if product.owner == user %}
+                    <a href="{% url 'catalog:product_update' product.id %}" class="btn btn-primary">Редактировать</a>
+                    <a href="{% url 'catalog:product_delete' product.id %}" class="btn btn-danger">Удалить</a>
                 {% endif %}
             </div>
         </div>
