@@ -1,8 +1,9 @@
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Product
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
@@ -37,15 +38,43 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = "catalog/product_create.html"
     success_url = reverse_lazy("catalog:home")
 
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
+
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = "catalog/product_create.html"
     success_url = reverse_lazy("catalog:home")
+    permission_required = "catalog.can_unpublish_product"
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return ProductForm
+        if user.has_perm("catalog.can_unpublish_product"):
+            return ProductModeratorForm
+        raise PermissionDenied("Нет прав для редактирования продукта")
+
+    def get_object(self, queryset=None):
+        product = super().get_object(queryset)
+        if self.request.user != product.owner and not self.request.user.has_perm("catalog.can_unpublish_product"):
+            raise PermissionDenied("Нет прав для редактирования продукта")
+        return product
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = "catalog/product_delete.html"
     success_url = reverse_lazy("catalog:home")
+
+    def get_object(self, queryset=None):
+        product = super().get_object(queryset)
+        if self.request.user != product.owner and not self.request.user.has_perm("can_delete_product"):
+            raise PermissionDenied("Нет прав для удаления продукта")
+        return product
+
+    def handle_no_permission(self):
+        return redirect("catalog:category_list")
