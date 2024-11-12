@@ -88,12 +88,12 @@ class ProductByCategoryView(View):
     model = Category
 
     def get(self, request, pk):
-        category = get_product_by_category(Category, pk)
+        category = get_object_or_404(Category, id=pk)
         products = get_product_by_category(pk)
         return render(request, "catalog/category_products.html", {"category": category, "products": products})
 
 
-class CategoryListView(View):
+class CategoryListView(ListView):
     model = Category
     template_name = "catalog/category_list.html"
     context_object_name = "categories"

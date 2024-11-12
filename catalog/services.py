@@ -9,13 +9,13 @@ def get_product_from_cache():
         return Product.objects.all()
 
     key = "product_list"
-    product = cache.get(key)
-    if product is not None:
-        return product
+    products = cache.get(key)
+    if products is not None:
+        return products
 
-    product = Product.objects.all()
-    cache.set(key, product)
-    return product
+    products = Product.objects.all()
+    cache.set(key, products)
+    return products
 
 
 def get_product_by_category(category_id):
